@@ -18,6 +18,15 @@
     "contentHash": "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1"
   },
   {
+    "id": "washer-dryer-combo",
+    "name": "Washer-Dryer Combo",
+    "category": "laundry",
+    "powerKw": 2.0,
+    "defaultRunHours": 3.0,
+    "description": "A combined washer-dryer runs a full wash and dry cycle back-to-back. Longer runtime makes it especially worth scheduling overnight.",
+    "contentHash": "aa1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d"
+  },
+  {
     "id": "dishwasher",
     "name": "Dishwasher",
     "category": "kitchen",
@@ -25,6 +34,69 @@
     "defaultRunHours": 2.0,
     "description": "Most modern dishwashers have a delay-start feature — perfect for running at greenest hours overnight.",
     "contentHash": "c3d4e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2"
+  },
+  {
+    "id": "electric-oven",
+    "name": "Electric Oven",
+    "category": "kitchen",
+    "powerKw": 2.2,
+    "defaultRunHours": 1.0,
+    "description": "A conventional electric fan oven. High wattage but short run time — great for batch cooking during a cheap Agile window.",
+    "contentHash": "cc2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d"
+  },
+  {
+    "id": "microwave",
+    "name": "Microwave",
+    "category": "kitchen",
+    "powerKw": 0.9,
+    "defaultRunHours": 0.25,
+    "description": "A standard 900W microwave. Short bursts of use — scheduling individual runs isn't practical, but using it during cheap windows adds up.",
+    "contentHash": "dd3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e"
+  },
+  {
+    "id": "kettle",
+    "name": "Kettle",
+    "category": "kitchen",
+    "powerKw": 3.0,
+    "defaultRunHours": 0.05,
+    "description": "The humble kettle is the UK's highest-wattage small appliance. Each boil uses about 0.15 kWh — its impact comes from frequency, not duration.",
+    "contentHash": "ee4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f"
+  },
+  {
+    "id": "air-fryer",
+    "name": "Air Fryer",
+    "category": "kitchen",
+    "powerKw": 1.4,
+    "defaultRunHours": 0.5,
+    "description": "More efficient than a full oven for smaller meals. Scheduling a batch cook during a cheap half-hour slot is straightforward.",
+    "contentHash": "ff5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a"
+  },
+  {
+    "id": "bread-maker",
+    "name": "Bread Maker",
+    "category": "kitchen",
+    "powerKw": 0.65,
+    "defaultRunHours": 3.0,
+    "description": "Bread makers have a delay-start timer — set them up in the evening and schedule the bake for the cheapest overnight window.",
+    "contentHash": "aa6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b"
+  },
+  {
+    "id": "slow-cooker",
+    "name": "Slow Cooker",
+    "category": "kitchen",
+    "powerKw": 0.3,
+    "defaultRunHours": 6.0,
+    "description": "Very low wattage but long run times. Scheduling a slow cooker during low-carbon daytime windows is an easy win.",
+    "contentHash": "bb7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c"
+  },
+  {
+    "id": "coffee-machine",
+    "name": "Coffee Machine (bean-to-cup)",
+    "category": "kitchen",
+    "powerKw": 1.5,
+    "defaultRunHours": 0.25,
+    "description": "Bean-to-cup and espresso machines draw significant power during heating. Scheduling the warm-up in a cheap slot cuts costs.",
+    "contentHash": "cc8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
   },
   {
     "id": "ev-charger-7kw",
@@ -45,6 +117,15 @@
     "contentHash": "e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4"
   },
   {
+    "id": "ev-charger-22kw",
+    "name": "EV Charger (22 kW three-phase)",
+    "category": "ev",
+    "powerKw": 22.0,
+    "defaultRunHours": 2.0,
+    "description": "Three-phase AC charger common in new-builds and commercial properties. Charges most EVs from empty in under 2 hours.",
+    "contentHash": "ee9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f"
+  },
+  {
     "id": "storage-heater",
     "name": "Storage Heater",
     "category": "heating",
@@ -63,6 +144,60 @@
     "contentHash": "a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6"
   },
   {
+    "id": "air-conditioner",
+    "name": "Air Conditioner / Portable AC",
+    "category": "heating",
+    "powerKw": 1.5,
+    "defaultRunHours": 4.0,
+    "description": "Portable or window AC units. Running during low-carbon early-morning hours before the day heats up can significantly reduce your carbon footprint.",
+    "contentHash": "ff0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a"
+  },
+  {
+    "id": "heat-pump",
+    "name": "Air Source Heat Pump",
+    "category": "heating",
+    "powerKw": 3.5,
+    "defaultRunHours": 6.0,
+    "description": "Air source heat pumps are 3–4× more efficient than direct electric heating. Scheduling pre-heating during cheap overnight windows maximises savings.",
+    "contentHash": "aa1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c"
+  },
+  {
+    "id": "fan-heater",
+    "name": "Fan Heater",
+    "category": "heating",
+    "powerKw": 2.0,
+    "defaultRunHours": 2.0,
+    "description": "An electric fan heater provides instant heat but is relatively expensive to run. Use sparingly and pick the cheapest window.",
+    "contentHash": "bb2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d"
+  },
+  {
+    "id": "dehumidifier",
+    "name": "Dehumidifier",
+    "category": "heating",
+    "powerKw": 0.5,
+    "defaultRunHours": 4.0,
+    "description": "Dehumidifiers can run unattended for long periods. Scheduling them overnight in low-intensity windows keeps running costs minimal.",
+    "contentHash": "cc3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e"
+  },
+  {
+    "id": "electric-shower",
+    "name": "Electric Shower",
+    "category": "bathroom",
+    "powerKw": 9.5,
+    "defaultRunHours": 0.17,
+    "description": "A 9.5 kW electric shower is the highest-wattage appliance in most UK homes. Each 10-minute shower uses about 1.6 kWh.",
+    "contentHash": "dd4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f"
+  },
+  {
+    "id": "hair-dryer",
+    "name": "Hair Dryer",
+    "category": "bathroom",
+    "powerKw": 2.0,
+    "defaultRunHours": 0.17,
+    "description": "A typical 2 kW hair dryer used for 10 minutes. Brief but high-wattage — morning peak usage adds up over a household.",
+    "contentHash": "ee5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a"
+  },
+  {
     "id": "pool-pump",
     "name": "Swimming Pool Pump",
     "category": "other",
@@ -70,5 +205,95 @@
     "defaultRunHours": 8.0,
     "description": "Pool circulation and filtration pump. Typically runs 8+ hours a day — running it in low-carbon overnight windows can cut CO₂ significantly.",
     "contentHash": "b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6a7"
+  },
+  {
+    "id": "hot-tub",
+    "name": "Hot Tub / Spa",
+    "category": "other",
+    "powerKw": 3.0,
+    "defaultRunHours": 4.0,
+    "description": "Hot tubs heat and circulate water continuously. Scheduling heating cycles during cheap overnight windows is one of the biggest residential savings opportunities.",
+    "contentHash": "ff6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b"
+  },
+  {
+    "id": "fridge-freezer",
+    "name": "Fridge-Freezer",
+    "category": "kitchen",
+    "powerKw": 0.15,
+    "defaultRunHours": 8.0,
+    "description": "A modern A-rated fridge-freezer runs continuously but compressor cycles are short. Annual consumption is around 150–250 kWh.",
+    "contentHash": "aa7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c"
+  },
+  {
+    "id": "chest-freezer",
+    "name": "Chest Freezer",
+    "category": "kitchen",
+    "powerKw": 0.1,
+    "defaultRunHours": 8.0,
+    "description": "Chest freezers are among the most efficient cold appliances — typically using under 100 kWh per year.",
+    "contentHash": "bb8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
+  },
+  {
+    "id": "gaming-pc",
+    "name": "Gaming PC",
+    "category": "computing",
+    "powerKw": 0.35,
+    "defaultRunHours": 3.0,
+    "description": "A mid-range gaming PC with a discrete GPU under load. Scheduling longer gaming or rendering sessions for cheap windows can save noticeably.",
+    "contentHash": "cc9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e"
+  },
+  {
+    "id": "desktop-computer",
+    "name": "Desktop Computer",
+    "category": "computing",
+    "powerKw": 0.12,
+    "defaultRunHours": 4.0,
+    "description": "A typical office or home desktop computer. Low wattage but often left on for hours — overnight scheduling of updates and backups helps.",
+    "contentHash": "dd0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f"
+  },
+  {
+    "id": "home-server-nas",
+    "name": "Home Server / NAS",
+    "category": "computing",
+    "powerKw": 0.06,
+    "defaultRunHours": 8.0,
+    "description": "Network-attached storage or home server running 24/7. Scheduling intensive tasks (backups, transcoding) for green windows makes a cumulative difference.",
+    "contentHash": "ee1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a"
+  },
+  {
+    "id": "3d-printer",
+    "name": "3D Printer",
+    "category": "computing",
+    "powerKw": 0.25,
+    "defaultRunHours": 4.0,
+    "description": "FDM 3D printers run unattended for hours. Scheduling overnight prints during cheap Agile windows is an easy efficiency win.",
+    "contentHash": "ff2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b"
+  },
+  {
+    "id": "robot-vacuum",
+    "name": "Robot Vacuum",
+    "category": "other",
+    "powerKw": 0.04,
+    "defaultRunHours": 1.5,
+    "description": "Most robot vacuums are schedulable via app. Setting them to run during the cheapest morning window is a simple set-and-forget saving.",
+    "contentHash": "aa3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c"
+  },
+  {
+    "id": "infrared-sauna",
+    "name": "Infrared Sauna",
+    "category": "other",
+    "powerKw": 2.0,
+    "defaultRunHours": 1.0,
+    "description": "Home infrared saunas heat up in 15–20 minutes and draw around 1.6–2.4 kW. Scheduling the warm-up during a cheap half-hour window cuts cost and carbon.",
+    "contentHash": "bb4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d"
+  },
+  {
+    "id": "electric-vehicle-battery",
+    "name": "Home Battery System",
+    "category": "ev",
+    "powerKw": 5.0,
+    "defaultRunHours": 2.0,
+    "description": "Home battery systems (e.g. Powerwall, GivEnergy) charge from the grid during cheap off-peak hours to power the home during peak times.",
+    "contentHash": "cc5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e"
   }
 ]

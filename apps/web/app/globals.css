@@ -73,14 +73,22 @@
   --glass-border: rgba(168,157,199,0.18);
 }
 
+html,
+body {
+  height: 100%;
+}
+
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
   font-feature-settings: 'kern' 1, 'liga' 1;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 /* Sticky header offset */

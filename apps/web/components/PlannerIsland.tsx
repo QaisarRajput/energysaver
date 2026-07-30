@@ -17,7 +17,7 @@ import { schedulePlan } from '../lib/schedule-plan';
 import { fmt12h, fmt12hWithDay } from '../lib/format-time';
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
-const APPLIANCES: Appliance[] = (appliancesRaw as unknown[]).flatMap((a) => {
+const STATIC_APPLIANCES: Appliance[] = (appliancesRaw as unknown[]).flatMap((a) => {
   const r = ApplianceSchema.safeParse(a);
   return r.success ? [r.data] : [];
 });
@@ -25,8 +25,34 @@ const TARIFFS: TariffPreset[] = (tariffsRaw as unknown[]).flatMap((t) => {
   const r = TariffPresetSchema.safeParse(t);
   return r.success ? [r.data] : [];
 });
+
+const CATEGORY_LABELS: Record<string, string> = {
+  laundry: 'Laundry',
+  kitchen: 'Kitchen',
+  ev: 'EV & Batteries',
+  heating: 'Heating & Cooling',
+  bathroom: 'Bathroom',
+  computing: 'Computing',
+  other: 'Other',
+  custom: 'My Custom Appliances',
+};
+
+function getCustomAppliances(): Appliance[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem('custom-appliances');
+    if (!raw) return [];
+    return JSON.parse(raw) as Appliance[];
+  } catch { return []; }
+}
+
+function saveCustomAppliances(list: Appliance[]) {
+  try { localStorage.setItem('custom-appliances', JSON.stringify(list)); } catch { /* noop */ }
+}
+
 function formatGbp(n: number) { return n >= 0.01 ? `£${n.toFixed(2)}` : `${(n * 100).toFixed(1)}p`; }
 function formatCo2(kg: number) { return kg >= 1 ? `${kg.toFixed(2)} kg` : `${(kg * 1000).toFixed(0)} g`; }
+
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 interface PlanItem {
@@ -188,6 +214,11 @@ export function PlannerIsland() {
   const router = useRouter();
   const params = useSearchParams();
 
+  const [customAppliances, setCustomAppliances] = useState<Appliance[]>([]);
+  useEffect(() => { setCustomAppliances(getCustomAppliances()); }, []);
+
+  const ALL_APPLIANCES = [...STATIC_APPLIANCES, ...customAppliances];
+
   // Parse URL state
   const [tariffId, setTariffId] = useState(params.get('tariff') ?? 'flat-standard');
   const [postcode, setPostcode] = useState(params.get('postcode') ?? '');
@@ -196,18 +227,32 @@ export function PlannerIsland() {
     const raw = params.get('appliances') ?? '';
     return raw.split(',').flatMap((part) => {
       const [id, wStr] = part.split(':');
-      const appliance = APPLIANCES.find((a) => a.id === id);
+      const appliance = ALL_APPLIANCES.find((a) => a.id === id);
       if (!appliance) return [];
       return [{ appliance, weight: parseFloat(wStr ?? '0.5') || 0.5 }];
     });
   }
 
-  const [items, setItems] = useState<PlanItem[]>(() => parseItemsFromUrl());
+  const [items, setItems] = useState<PlanItem[]>([]);
+  // Initialise from URL after custom appliances are loaded
+  const didInit = useRef(false);
+  useEffect(() => {
+    if (didInit.current) return;
+    didInit.current = true;
+    setItems(parseItemsFromUrl());
+  }, [customAppliances]); // intentional one-shot init on first load
+
   const [slots, setSlots] = useState<MergedSlot[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [planResult, setPlanResult] = useState<ReturnType<typeof schedulePlan> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Custom appliance form state
+  const [showCustomForm, setShowCustomForm] = useState(false);
+  const [customName, setCustomName] = useState('');
+  const [customKw, setCustomKw] = useState('');
+  const [customHours, setCustomHours] = useState('');
 
   // Persist to URL
   function pushUrl(nextItems: PlanItem[], nextTariff: string, nextPostcode: string) {
@@ -263,7 +308,7 @@ export function PlannerIsland() {
   }, [items, postcode, tariffId, runPlan]);
 
   function addAppliance(id: string) {
-    const appliance = APPLIANCES.find((a) => a.id === id);
+    const appliance = ALL_APPLIANCES.find((a) => a.id === id);
     if (!appliance || items.some((it) => it.appliance.id === id)) return;
     const next = [...items, { appliance, weight: 0.5 }];
     setItems(next);
@@ -282,6 +327,44 @@ export function PlannerIsland() {
     pushUrl(next, tariffId, postcode);
   }
 
+  function addCustomAppliance() {
+    const kw = parseFloat(customKw);
+    const hours = parseFloat(customHours);
+    if (!customName.trim() || isNaN(kw) || kw <= 0 || isNaN(hours) || hours <= 0) return;
+    const id = `custom-${Date.now()}`;
+    const newAppliance: Appliance = {
+      id,
+      name: customName.trim(),
+      category: 'custom',
+      powerKw: kw,
+      defaultRunHours: hours,
+      contentHash: '',
+    };
+    const updated = [...customAppliances, newAppliance];
+    setCustomAppliances(updated);
+    saveCustomAppliances(updated);
+    const next = [...items, { appliance: newAppliance, weight: 0.5 }];
+    setItems(next);
+    pushUrl(next, tariffId, postcode);
+    setCustomName(''); setCustomKw(''); setCustomHours('');
+    setShowCustomForm(false);
+  }
+
+  function deleteCustomAppliance(id: string) {
+    const updated = customAppliances.filter((a) => a.id !== id);
+    setCustomAppliances(updated);
+    saveCustomAppliances(updated);
+    removeAppliance(id);
+  }
+
+  // Group appliances by category for the select dropdown
+  const categories = Object.keys(CATEGORY_LABELS);
+  const grouped = categories.reduce<Record<string, Appliance[]>>((acc, cat) => {
+    const list = ALL_APPLIANCES.filter((a) => a.category === cat && !items.some((it) => it.appliance.id === a.id));
+    if (list.length) acc[cat] = list;
+    return acc;
+  }, {});
+
   const planUrl = typeof window !== 'undefined' ? window.location.href : '/planner';
 
   return (
@@ -297,19 +380,79 @@ export function PlannerIsland() {
           {/* Add appliance */}
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-5 space-y-3">
             <p className="text-sm font-semibold text-[var(--text)]">Add appliance</p>
-            <div className="flex gap-2">
-              <select
-                className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2 text-sm"
-                defaultValue=""
-                onChange={(e) => { if (e.target.value) addAppliance(e.target.value); e.target.value = ''; }}
-                aria-label="Select appliance to add"
-              >
-                <option value="" disabled>Select appliance…</option>
-                {APPLIANCES.filter((a) => !items.some((it) => it.appliance.id === a.id)).map((a) => (
-                  <option key={a.id} value={a.id}>{a.name} ({a.powerKw}kW)</option>
-                ))}
-              </select>
-            </div>
+
+            {/* Grouped select */}
+            <select
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2 text-sm"
+              value=""
+              onChange={(e) => { if (e.target.value) addAppliance(e.target.value); }}
+              aria-label="Select appliance to add"
+            >
+              <option value="" disabled>Select appliance…</option>
+              {Object.entries(grouped).map(([cat, list]) => (
+                <optgroup key={cat} label={CATEGORY_LABELS[cat] ?? cat}>
+                  {list.map((a) => (
+                    <option key={a.id} value={a.id}>{a.name} · {a.powerKw} kW</option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+
+            {/* Custom appliance toggle */}
+            <button
+              type="button"
+              onClick={() => setShowCustomForm((v) => !v)}
+              className="w-full flex items-center justify-between text-xs font-semibold uppercase tracking-wider px-3 py-2 rounded-lg border border-dashed border-[var(--border)] text-[var(--text-muted)] hover:border-[#9bc400] hover:text-[#9bc400] transition-colors"
+            >
+              <span>+ Add custom appliance</span>
+              <span className={`transition-transform ${showCustomForm ? 'rotate-180' : ''}`}>▾</span>
+            </button>
+
+            {showCustomForm && (
+              <div className="space-y-2 pt-1">
+                <input
+                  type="text"
+                  placeholder="Appliance name (e.g. Garden Lights)"
+                  value={customName}
+                  onChange={(e) => setCustomName(e.target.value)}
+                  className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2 text-sm"
+                  maxLength={60}
+                />
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-xs text-[var(--text-muted)] block mb-1">Power (kW)</label>
+                    <input
+                      type="number"
+                      placeholder="e.g. 1.5"
+                      value={customKw}
+                      onChange={(e) => setCustomKw(e.target.value)}
+                      min="0.01" max="100" step="0.05"
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-[var(--text-muted)] block mb-1">Run time (h)</label>
+                    <input
+                      type="number"
+                      placeholder="e.g. 2"
+                      value={customHours}
+                      onChange={(e) => setCustomHours(e.target.value)}
+                      min="0.25" max="24" step="0.25"
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2 text-sm"
+                    />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={addCustomAppliance}
+                  disabled={!customName.trim() || !customKw || !customHours}
+                  className="w-full rounded-lg py-2 text-sm font-semibold text-white transition-opacity disabled:opacity-40"
+                  style={{ background: '#9bc400' }}
+                >
+                  Add to plan
+                </button>
+              </div>
+            )}
 
             {/* Settings */}
             <div>
@@ -341,20 +484,36 @@ export function PlannerIsland() {
             <div className="space-y-3">
               {items.map((item) => {
                 const asgn = assignments.find((a) => a.applianceId === item.appliance.id);
+                const isCustom = item.appliance.category === 'custom';
                 return (
                   <div key={item.appliance.id} className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] p-4 space-y-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="font-medium text-sm text-[var(--text)]">{item.appliance.name}</p>
+                        <p className="font-medium text-sm text-[var(--text)] flex items-center gap-1.5">
+                          {item.appliance.name}
+                          {isCustom && <span className="text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide" style={{ background: '#f4f1f8', color: '#8076a3' }}>custom</span>}
+                        </p>
                         <p className="text-xs text-[var(--text-muted)]">{item.appliance.powerKw} kW · {item.appliance.defaultRunHours}h</p>
                       </div>
-                      <button
-                        onClick={() => removeAppliance(item.appliance.id)}
-                        className="text-[var(--text-muted)] hover:text-[var(--danger)] text-xs transition-colors"
-                        aria-label={`Remove ${item.appliance.name}`}
-                      >
-                        ✕
-                      </button>
+                      <div className="flex items-center gap-1">
+                        {isCustom && (
+                          <button
+                            onClick={() => deleteCustomAppliance(item.appliance.id)}
+                            className="text-[10px] text-[var(--text-muted)] hover:text-[var(--danger)] transition-colors px-1"
+                            title="Delete custom appliance"
+                            aria-label={`Delete custom appliance ${item.appliance.name}`}
+                          >
+                            🗑
+                          </button>
+                        )}
+                        <button
+                          onClick={() => removeAppliance(item.appliance.id)}
+                          className="text-[var(--text-muted)] hover:text-[var(--danger)] text-xs transition-colors"
+                          aria-label={`Remove ${item.appliance.name}`}
+                        >
+                          ✕
+                        </button>
+                      </div>
                     </div>
 
                     {/* Weight slider */}

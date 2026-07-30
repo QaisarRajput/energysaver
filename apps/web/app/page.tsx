@@ -137,7 +137,7 @@ export default function HomePage() {
             {[
               { num: '48h', label: 'Live Forecast' },
               { num: '110', label: 'UK Regions' },
-              { num: '8', label: 'Appliances' },
+              { num: '32', label: 'Appliances' },
               { num: '0p', label: 'Cost to Use' },
             ].map(({ num, label }) => (
               <div key={label} className="flex items-baseline gap-3">

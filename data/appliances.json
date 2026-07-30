@@ -1,0 +1,74 @@
+[
+  {
+    "id": "tumble-dryer",
+    "name": "Tumble Dryer",
+    "category": "laundry",
+    "powerKw": 2.5,
+    "defaultRunHours": 1.5,
+    "description": "A standard heat-pump or condenser tumble dryer. One of the highest-wattage everyday appliances — ideal candidate for load-shifting.",
+    "contentHash": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0"
+  },
+  {
+    "id": "washing-machine",
+    "name": "Washing Machine",
+    "category": "laundry",
+    "powerKw": 0.8,
+    "defaultRunHours": 1.5,
+    "description": "A typical front-loader washing machine. Less powerful than a dryer but still worth shifting overnight.",
+    "contentHash": "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1"
+  },
+  {
+    "id": "dishwasher",
+    "name": "Dishwasher",
+    "category": "kitchen",
+    "powerKw": 1.2,
+    "defaultRunHours": 2.0,
+    "description": "Most modern dishwashers have a delay-start feature — perfect for running at greenest hours overnight.",
+    "contentHash": "c3d4e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2"
+  },
+  {
+    "id": "ev-charger-7kw",
+    "name": "EV Charger (7 kW home unit)",
+    "category": "ev",
+    "powerKw": 7.4,
+    "defaultRunHours": 4.0,
+    "description": "A standard home wallbox (32A, 7.4 kW). Run duration depends on how many kWh you need — adjust using the target kWh field.",
+    "contentHash": "d4e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3"
+  },
+  {
+    "id": "ev-charger-3kw",
+    "name": "EV Charger (3 kW slow)",
+    "category": "ev",
+    "powerKw": 3.0,
+    "defaultRunHours": 6.0,
+    "description": "A 3-pin or slow 13A charge, common in older homes without a wallbox installed.",
+    "contentHash": "e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4"
+  },
+  {
+    "id": "storage-heater",
+    "name": "Storage Heater",
+    "category": "heating",
+    "powerKw": 2.0,
+    "defaultRunHours": 7.0,
+    "description": "Off-peak storage heaters designed to charge overnight and release heat through the day — core Economy 7 appliance.",
+    "contentHash": "f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5"
+  },
+  {
+    "id": "immersion-heater",
+    "name": "Immersion Heater (hot water tank)",
+    "category": "heating",
+    "powerKw": 3.0,
+    "defaultRunHours": 2.0,
+    "description": "Heating a hot-water cylinder with an electric immersion element — commonly paired with Economy 7 or solar diverters.",
+    "contentHash": "a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6"
+  },
+  {
+    "id": "pool-pump",
+    "name": "Swimming Pool Pump",
+    "category": "other",
+    "powerKw": 1.1,
+    "defaultRunHours": 8.0,
+    "description": "Pool circulation and filtration pump. Typically runs 8+ hours a day — running it in low-carbon overnight windows can cut CO₂ significantly.",
+    "contentHash": "b8c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6a7"
+  }
+]

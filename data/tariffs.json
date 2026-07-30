@@ -1,0 +1,53 @@
+[
+  {
+    "id": "flat-standard",
+    "name": "Standard (flat rate)",
+    "description": "A single unit rate all day — no off-peak windows. The baseline for most households on a standard variable tariff.",
+    "peakRateP": 24.5,
+    "offPeakRateP": 24.5,
+    "windows": [
+      { "label": "standard", "startHhMm": "00:00", "endHhMm": "23:30", "rateP": 24.5 }
+    ],
+    "contentHash": "c9d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6a7b8"
+  },
+  {
+    "id": "economy-7",
+    "name": "Economy 7",
+    "description": "Seven cheap overnight hours (typically 00:30–07:30 GMT / 01:30–08:30 BST). Great for storage heaters and immersion tanks.",
+    "peakRateP": 28.0,
+    "offPeakRateP": 15.0,
+    "windows": [
+      { "label": "off-peak", "startHhMm": "00:30", "endHhMm": "07:30", "rateP": 15.0 },
+      { "label": "peak",     "startHhMm": "07:30", "endHhMm": "00:30", "rateP": 28.0 }
+    ],
+    "contentHash": "d0e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6a7b8c9"
+  },
+  {
+    "id": "economy-10",
+    "name": "Economy 10",
+    "description": "Ten hours of cheap electricity spread across three windows: 13:00–16:00, 20:00–22:00, and 00:30–05:30.",
+    "peakRateP": 27.0,
+    "offPeakRateP": 13.5,
+    "windows": [
+      { "label": "off-peak", "startHhMm": "13:00", "endHhMm": "16:00", "rateP": 13.5 },
+      { "label": "off-peak", "startHhMm": "20:00", "endHhMm": "22:00", "rateP": 13.5 },
+      { "label": "off-peak", "startHhMm": "00:30", "endHhMm": "05:30", "rateP": 13.5 },
+      { "label": "peak",     "startHhMm": "05:30", "endHhMm": "13:00", "rateP": 27.0 },
+      { "label": "peak",     "startHhMm": "16:00", "endHhMm": "20:00", "rateP": 27.0 },
+      { "label": "peak",     "startHhMm": "22:00", "endHhMm": "00:30", "rateP": 27.0 }
+    ],
+    "contentHash": "e1f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6a7b8c9d0"
+  },
+  {
+    "id": "go-ev",
+    "name": "Octopus Go (EV)",
+    "description": "EV-optimised tariff: very cheap 00:30–05:30, standard rate otherwise. Ideal for overnight EV charging.",
+    "peakRateP": 24.5,
+    "offPeakRateP": 9.0,
+    "windows": [
+      { "label": "off-peak", "startHhMm": "00:30", "endHhMm": "05:30", "rateP": 9.0 },
+      { "label": "peak",     "startHhMm": "05:30", "endHhMm": "00:30", "rateP": 24.5 }
+    ],
+    "contentHash": "f2a3b4c5d6a7b8c9d0e1f2a3b4c5d6a7b8c9d0e1"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "name": "etl",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "tsx src/validate.ts",
+    "sync-agile": "tsx src/sync-agile.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@energysaver/schema": "workspace:*",
+    "tsx": "^4.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}

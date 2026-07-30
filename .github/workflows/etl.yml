@@ -1,0 +1,40 @@
+name: ETL — Sync Agile fallback snapshot
+
+on:
+  schedule:
+    - cron: '30 16 * * *' # Daily at 16:30 UTC (after Agile prices publish ~16:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Re-validate static data
+        run: pnpm --filter etl run validate
+
+      - name: Commit updated data (no-op if unchanged)
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(data): sync agile fallback snapshot [skip ci]'
+          commit_user_name: energysaver-bot
+          commit_user_email: bot@energysaver.hubs.dpdns.org
+          file_pattern: 'data/**'

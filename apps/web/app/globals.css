@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+:root {
+  /* Carbonex palette */
+  --green: #9bc400;
+  --green-hover: #85a800;
+  --purple: #8076a3;
+  --purple-dark: #7c677f;
+  --pink: #f9c5bd;
+
+  /* Surfaces */
+  --bg: #ffffff;
+  --bg-card: #ffffff;
+  --surface-muted: #fdf5f3;
+  --surface-purple: #f4f1f8;
+
+  /* Semantic aliases */
+  --accent: #9bc400;
+  --accent-hover: #85a800;
+  --text: #2d2640;
+  --text-muted: #7c677f;
+  --border: #e8e0f0;
+  --ring: #9bc400;
+  --success: #9bc400;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Glass */
+  --glass-bg: rgba(255,255,255,0.88);
+  --glass-border: rgba(128,118,163,0.18);
+
+  /* Layout */
+  --header-height: 64px;
+
+  /* Intensity gradient stops */
+  --i-very-low: #9bc400;
+  --i-low: #c5e04d;
+  --i-moderate: #f9c5bd;
+  --i-high: #f97316;
+  --i-very-high: #dc2626;
+}
+
+.dark {
+  --bg: #1a1625;
+  --bg-card: #221e30;
+  --surface-muted: #1e1930;
+  --surface-purple: #241f34;
+  --accent: #9bc400;
+  --accent-hover: #acd800;
+  --purple: #a89dc7;
+  --purple-dark: #9d8ca4;
+  --pink: #4a3540;
+  --text: #f0edfb;
+  --text-muted: #9d8ca4;
+  --border: #352e4a;
+  --ring: #9bc400;
+  --success: #9bc400;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --glass-bg: rgba(26,22,37,0.88);
+  --glass-border: rgba(168,157,199,0.18);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+/* Sticky header offset */
+main {
+  padding-top: var(--header-height);
+}
+
+/* Glass card utility */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Display heading utility */
+.display-heading {
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+/* Eyebrow label */
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+/* Pill button */
+.btn-pill {
+  border-radius: 9999px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+  transition: all 0.15s ease;
+}
+
+/* Theme transitions - exclude transforms to avoid janky animations */
+*:not([class*="transition"]):not([class*="animate"]) {
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+/* Intensity index color tokens */
+.intensity-very-low  { background-color: #9bc400; color: #fff; }
+.intensity-low       { background-color: #c5e04d; color: #2d2640; }
+.intensity-moderate  { background-color: #f9c5bd; color: #7c677f; }
+.intensity-high      { background-color: #f97316; color: #fff; }
+.intensity-very-high { background-color: #dc2626; color: #fff; }
+
+/* Section divider wave */
+.section-wave {
+  margin-top: -1px;
+  display: block;
+  width: 100%;
+}

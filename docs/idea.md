@@ -1,0 +1,4 @@
+Grid-Smart Energy Timer — turning carbon intensity into a concrete dollar/CO2 number
+The synthesis: The UK Carbon Intensity API (free, CORS: Yes) and similar tools show you a number like "187 gCO2/kWh." Nobody turns that into "run your dryer at 2am instead of 6pm and save £1.40 and 0.8kg CO2 tonight."
+
+What you build: Combine live grid intensity with publicly published time-of-use electricity tariffs (most UK/EU utilities publish these) and a simple appliance wattage table, to output a concrete per-appliance, per-night recommendation instead of an abstract number. Who pays: climate-conscious households + EV owners (UK/EU market especially). Buy Me a Coffee + affiliate smart-plug links.
